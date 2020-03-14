@@ -1,7 +1,7 @@
 seed = 42
-vocab_size = 15000
-max_length = 120
-embedding_dim = 120
+vocab_size = 20000
+max_length = 150
+embedding_dim = 100
 trunc_type = 'post'
 pad_type = 'post'
 oov_tok = "<OOV>"
