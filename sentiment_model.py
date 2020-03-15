@@ -4,7 +4,7 @@ import random
 import os
 import numpy as np
 import pandas as pd
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -15,9 +15,8 @@ from variables import *
 from collections import Counter
 from util import get_data
 
-tf.disable_v2_behavior()
-# np.random.seed(seed)
-# tf.compat.v1.set_random_seed(seed)
+np.random.seed(seed)
+tf.compat.v1.set_random_seed(seed)
 
 class myCallback(keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
