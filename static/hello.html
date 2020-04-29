@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sarcarsm Headline Detection</title>
+    <style>
+        * {
+            font-size:30px;
+        }
+    </style>
+</head>
+<body>
+    <input id="input-text" type="text"/>
+    <button id="id-button">Enter the Sentiment Text</button>
+    <p id="is_sarcastic"></p>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $("#id-button").click(function(event){
+            let message = {
+                input_text: $("#input-text").val()
+            }
+            $.post("http://127.0.0.1:5000/predict", JSON.stringify(message), function(response){
+                $("#is_sarcastic").text(response.is_sarcastic);
+                console.log(response);
+            });
+        });
+    </script>
+</body>
+</html>

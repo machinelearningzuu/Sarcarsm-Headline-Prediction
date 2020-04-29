@@ -37,10 +37,10 @@ def get_data():
         train_and_test_data(data)
     train_data = pd.read_csv(train_path)
     test_data  = pd.read_csv(test_path)
-    print("No: of train positive samples: {}".format(len(train_data[train_data['is_sarcastic'] == 1])))
-    print("No: of train negative samples: {}".format(len(train_data[train_data['is_sarcastic'] == 0])))
-    print("No: of test positive samples: {}".format(len(test_data[test_data['is_sarcastic'] == 1])))
-    print("No: of test negative samples: {}".format(len(test_data[test_data['is_sarcastic'] == 0])))
+    # print("No: of train positive samples: {}".format(len(train_data[train_data['is_sarcastic'] == 1])))
+    # print("No: of train negative samples: {}".format(len(train_data[train_data['is_sarcastic'] == 0])))
+    # print("No: of test positive samples: {}".format(len(test_data[test_data['is_sarcastic'] == 1])))
+    # print("No: of test negative samples: {}".format(len(test_data[test_data['is_sarcastic'] == 0])))
 
     Xtrain, Ytrain = train_data['preprocessed headlines'], train_data['is_sarcastic']
     Xtest , Ytest  = test_data['preprocessed headlines'],  test_data['is_sarcastic']

@@ -8,7 +8,6 @@ oov_tok = "<OOV>"
 num_epochs = 10
 batch_size = 128
 size_lstm1 = 128
-size_lstm2 = 64
 size_dense = 64
 size_output = 1
 

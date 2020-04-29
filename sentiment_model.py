@@ -25,7 +25,8 @@ class myCallback(keras.callbacks.Callback):
             self.model.stop_training = True
 
 class SentimentAnalyser:
-    def __init__(self,Xtrain,Ytrain,Xtest,Ytest):
+    def __init__(self):
+        Xtrain, Ytrain, Xtest , Ytest = get_data()
         self.Xtrain = Xtrain
         self.Ytrain = Ytrain
         self.Xtest  = Xtest
@@ -46,8 +47,7 @@ class SentimentAnalyser:
 
         model = Sequential()
         model.add(Embedding(output_dim=embedding_dim, input_dim=vocab_size, input_length=max_length))
-        model.add(Bidirectional(LSTM(size_lstm1,return_sequences=True)))
-        model.add(Bidirectional(LSTM(size_lstm2)))
+        model.add(Bidirectional(LSTM(size_lstm1)))
         model.add(Dense(size_dense, activation='relu'))
         model.add(Dense(size_dense, activation='relu'))
         model.add(Dense(size_dense, activation='relu'))
@@ -83,12 +83,17 @@ class SentimentAnalyser:
             json_file.write(model_json)
         self.model.save_weights(sentiment_weights)
 
-    def predict(self,headlines, is_sarcastic):
-        sequence_data = self.tokenizer.texts_to_sequences(headlines)
-        padded_data = pad_sequences(sequence_data, maxlen=max_length)
-        if len(padded_data) == 1:
-            loss, accuracy = self.model.evaluate(padded_data,np.array([is_sarcastic]))
+    def run(self):
+        self.tokenizing_data()
+        if os.path.exists(sentiment_path) and os.path.exists(sentiment_weights):
+            self.load_model()
         else:
-            loss, accuracy = self.model.evaluate(padded_data,is_sarcastic)
-        print("Val_loss: ",loss)
-        print("Val_accuracy: ",accuracy)
+            self.embedding_model()
+            self.train_model()
+            self.save_model()
+
+    def predicts(self,headlines):
+        sequence_data = self.tokenizer.texts_to_sequences([headlines])
+        padded_data = pad_sequences(sequence_data, maxlen=max_length)
+        P = self.model.predict(padded_data).squeeze()
+        return "Sacastic" if P > 0.5 else "Not Sacastic"
